@@ -3,6 +3,7 @@ package com.skplanet.mailer.mail;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -19,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import com.skplanet.cask.container.config.ConfigReader;
 import com.skplanet.cask.util.StringUtil;
 import com.skplanet.mailer.db.MailDao;
+import com.skplanet.mailer.db.MailRcptAliasDao;
 import com.skplanet.mailer.service.ShowMail;
 import com.skplanet.mailer.util.Crypto;
 import com.skplanet.mailer.util.HiberUtil;
@@ -121,6 +123,22 @@ public class Mailer {
                 ConfigReader.getInstance().getServerConfig().getPropValue("crSalt"));
         return crypt.decrypt(dao.getPassword());
     }
+    private List<String> resolveAlias(String alias) throws Exception {
+        
+        List<MailRcptAliasDao> aliasList = selectAlias(alias);
+        List<String> rcptList = new ArrayList<String>();
+        
+        if(aliasList.size() == 0) {
+            rcptList.add(alias);
+        } else { 
+            for(int i = 0; i < aliasList.size(); i++) {
+                MailRcptAliasDao curr = aliasList.get(i);
+                String rcpt = curr.getRcptAddr();
+                rcptList.add(rcpt);
+            }
+        }
+        return rcptList;
+    }
     private void sendRealLow(MailDao curr) throws Exception {
         try {
             Email email = new SimpleEmail();
@@ -142,9 +160,14 @@ public class Mailer {
             email.setSubject(curr.getSubject());
             email.setMsg(curr.getMessage());
             
+            
+            
             String[] receivers = curr.getRecipient().split("[,;]");
             for(int j = 0; j < receivers.length; j++) {
-                email.addTo(receivers[j]);    
+                List<String> realRcpt = resolveAlias(receivers[j]);
+                for(int k = 0; k < realRcpt.size(); k++) {
+                    email.addTo(realRcpt.get(k));    
+                }
             }
              
             email.setSocketConnectionTimeout(TIME_OUT);
@@ -297,6 +320,31 @@ public class Mailer {
             
             tx.commit();
             return resultList;
+        } catch(Exception e) {
+            if(tx != null) {
+                tx.rollback();
+            }
+            throw e;
+        } finally {
+            session.close();
+        }
+    }
+    private static List<MailRcptAliasDao> selectAlias(String alias) throws Exception {
+        Session session = HiberUtil.openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+
+            String hql  = "from MailRcptAliasDao M where M.alias = :alias order by rcpt_id";
+            Query query = session.createQuery(hql);
+            query.setParameter("alias", alias);
+            List result = query.list();
+            
+            Iterator itRes = result.iterator();
+            
+            
+            tx.commit();
+            return (List<MailRcptAliasDao>)result;
         } catch(Exception e) {
             if(tx != null) {
                 tx.rollback();
