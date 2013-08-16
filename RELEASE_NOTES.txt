@@ -3,6 +3,9 @@
                    Release Notes
 
 --------------------
+0.2.1
+- mail alias added. 
+
 0.2.0
 - At first save mails into db, read from db and send them periodically.  
 - show mails history.
