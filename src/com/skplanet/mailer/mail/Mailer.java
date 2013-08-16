@@ -21,13 +21,12 @@ import com.skplanet.cask.container.config.ConfigReader;
 import com.skplanet.cask.util.StringUtil;
 import com.skplanet.mailer.db.MailDao;
 import com.skplanet.mailer.db.MailRcptAliasDao;
-import com.skplanet.mailer.service.ShowMail;
 import com.skplanet.mailer.util.Crypto;
 import com.skplanet.mailer.util.HiberUtil;
 
 public class Mailer {
     private Logger logger = LoggerFactory.getLogger(Mailer.class);
-    private LinkedList<MailInfo> mailQueue = new LinkedList<MailInfo>();
+    
     private static Mailer instance = new Mailer();
     private static int TIME_OUT = 10000; 
     private static int RETRY_COUNT = 3;
@@ -163,8 +162,6 @@ public class Mailer {
             email.setSubject(curr.getSubject());
             email.setMsg(curr.getMessage());
             
-            
-            
             String[] receivers = curr.getRecipient().split("[,;]");
             for(int j = 0; j < receivers.length; j++) {
                 List<String> realRcpt = resolveAlias(receivers[j]);
@@ -236,10 +233,7 @@ public class Mailer {
         return count;
     }
     
-    private synchronized void addQueue(MailInfo info) {
-        mailQueue.addLast(info);
-    }
-        
+
 
     private static void update(MailDao mailDao) throws Exception {
         Logger logger = LoggerFactory.getLogger(Mailer.class);
