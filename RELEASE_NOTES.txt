@@ -1,0 +1,14 @@
+
+                   PrimMailer
+                   Release Notes
+
+--------------------
+0.2.0
+- At first save mails into db, read from db and send them periodically.  
+- show mails history.
+- send mails using http post.  
+
+0.1.0
+- make build template.
+- implement mail sender
+

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<configuration>
+    <server name="localhost" port="8200" contextPath="/mail" maxThreads="512"/>
+    <services>
+        <service url="/send" 
+                 class="com.skplanet.mailer.service.SendMail" 
+                 exec="request" 
+                 method="get"/>
+        <service url="/sendpost" 
+                 class="com.skplanet.mailer.service.SendMailPost" 
+                 exec="request" 
+                 method="post"/>
+        <service url="/show" 
+                 class="com.skplanet.mailer.service.ShowMail" 
+                 exec="request" 
+                 method="get"/>
+        <service url="/error" 
+                 class="com.skplanet.cask.service.ErrorRedirect" 
+                 exec="request"
+                 method="get"/>
+        <service url="/sendbatch" 
+                 class="com.skplanet.mailer.service.SendMailBatch" 
+                 exec="batch" 
+                 method="post"
+                 sleepMSec="60000"/>
+    </services>
+
+    <datasources>
+    <!-- 
+        <datasource id = "caskRuntime">
+            <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+            <url>jdbc:mysql://localhost:3306/cask_test?autoReconnect=true</url>
+            <username>lons</username>
+            <password>1234</password>
+            <initSQL>SELECT 1</initSQL>
+            <initialSize>10</initialSize>
+            <minIdle>10</minIdle>
+            <maxIdle>100</maxIdle>
+            <maxActive>100</maxActive>
+            <defaultAutoCommit>false</defaultAutoCommit>
+            <validateQuery>SELECT 1</validateQuery>
+        </datasource>
+         -->
+    </datasources>
+    
+    <properties>
+        <property key = "saveRuntimeIntoDb" value = "false"/>
+        <property key = "runtimeDb" value = "caskRuntime"/>
+        
+        <property key = "smtpServer" value = "smtp.server.com"/>
+        <property key = "smtpPort" value = "443"/>
+        <property key = "ssl" value = "true"/>
+        <property key = "id" value = "user"/>
+        <property key = "password" value = "password"/>
+        <!-- password for encryption. needed when id, password assigned. any word -->
+        <property key = "crPassword" value = "myPassForEncription"/>
+        <!-- salt for encryption. needed when id, password assigned. any number -->
+        <property key = "crSalt" value = "12345678"/>
+    </properties>
+
+</configuration>
