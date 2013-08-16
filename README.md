@@ -1,4 +1,4 @@
-PrimMailer
+PrimeMailer
 ==========
 Relay mail server to SMTP server.
 

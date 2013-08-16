@@ -1,5 +1,5 @@
 
-                   PrimMailer
+                   PrimeMailer
                    Release Notes
 
 --------------------
