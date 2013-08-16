@@ -129,13 +129,16 @@ public class Mailer {
         List<String> rcptList = new ArrayList<String>();
         
         if(aliasList.size() == 0) {
+            logger.info("no alias. send to : {}", alias);
             rcptList.add(alias);
         } else { 
+            
             for(int i = 0; i < aliasList.size(); i++) {
                 MailRcptAliasDao curr = aliasList.get(i);
                 String rcpt = curr.getRcptAddr();
                 rcptList.add(rcpt);
             }
+            logger.info("resolve alias. alias {}, send to : {}", alias, aliasList.toString());
         }
         return rcptList;
     }
