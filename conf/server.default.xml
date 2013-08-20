@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 
 <configuration>
-    <server name="localhost" port="8200" contextPath="/mail" maxThreads="512"/>
+    <server name="localhost" port="8200" contextPath="/mail" maxThreads="512" staticErrorRedirect="/error.jsp"/>
     <services>
         <service url="/send" 
                  class="com.skplanet.mailer.service.SendMail" 
@@ -47,16 +47,18 @@
     <properties>
         <property key = "saveRuntimeIntoDb" value = "false"/>
         <property key = "runtimeDb" value = "caskRuntime"/>
-        
-        <property key = "smtpServer" value = "smtp.server.com"/>
-        <property key = "smtpPort" value = "443"/>
+        <!--
+        <property key = "smtpServer" value = "10.40.30.85"/>
+        <property key = "smtpPort" value = "25"/>
+--> 
+        <property key = "crPassword" value = "password"/>
+        <property key = "crSalt" value = "34343434"/>
+        <property key = "smtpServer" value = "smtp.server"/>
+        <property key = "smtpPort" value = "465"/>
         <property key = "ssl" value = "true"/>
-        <property key = "id" value = "user"/>
+        <property key = "id" value = "id"/>
         <property key = "password" value = "password"/>
-        <!-- password for encryption. needed when id, password assigned. any word -->
-        <property key = "crPassword" value = "myPassForEncription"/>
-        <!-- salt for encryption. needed when id, password assigned. any number -->
-        <property key = "crSalt" value = "12345678"/>
+                 
     </properties>
 
 </configuration>

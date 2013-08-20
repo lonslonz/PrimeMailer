@@ -3,6 +3,9 @@
                    Release Notes
 
 --------------------
+0.2.2
+- add ant build configuration for real, dev config. 
+
 0.2.1
 - mail alias added. 
 

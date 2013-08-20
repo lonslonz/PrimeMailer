@@ -33,9 +33,9 @@
         <!-- Database connection settings -->
         <property name="connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="connection.url">jdbc:mysql://mysqlDB/mail?autoReconnect=true</property>
-        <property name="connection.username">user</property>
-        <property name="connection.password">pass</property>
+        <property name="connection.url">jdbc:mysql://mysqlserver/mail?autoReconnect=true</property>
+        <property name="connection.username">lons</property>
+        <property name="connection.password">dlwhdals</property>
         <property name="hibernate.connection.autocommit ">false</property>
 
         <property name="hibernate.c3p0.min_size">10</property>
@@ -60,7 +60,7 @@
 
         <!-- Drop and re-create the database schema on startup -->
         <mapping class="com.skplanet.mailer.db.MailDao"/>
-
+        <mapping class="com.skplanet.mailer.db.MailRcptAliasDao"/>
     </session-factory>
 
 </hibernate-configuration>
