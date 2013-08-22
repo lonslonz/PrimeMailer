@@ -3,6 +3,11 @@
                    Release Notes
 
 --------------------
+0.2.3
+- cask lib up
+- fix build
+- fix to access jsp, static resource 
+
 0.2.2
 - add ant build configuration for real, dev config. 
 

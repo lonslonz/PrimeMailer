@@ -1,2 +1,2 @@
-<% out.write("error write JSP");
+<% out.write("out write test.");
 %>
