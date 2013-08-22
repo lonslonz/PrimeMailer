@@ -17,7 +17,7 @@
 	<property file="${src.dir}/version.properties"/>
 	<property name="version" value="${VERSION}"/>
 	<property name="dist.dir" value="${ant.project.name}-${version}"/>
-	   <property name="jar.file" value="${ant.project.name}-${version}.jar"/>
+	<property name="jar.file" value="${ant.project.name}-${version}.jar"/>
     <property name="tar.file" value="${ant.project.name}-${version}.tar.gz"/>
 
 	
@@ -29,8 +29,10 @@
 	
 	<target name="clean">
 		<delete dir="${classes.dir}"/>
-		<delete dir="${dist.dir}"/>
-		<delete file="${tar.file}"/>
+		<delete includeemptydirs="true">
+            <fileset dir="." includes="${ant.project.name}-*"/>
+            <fileset dir="." includes="${ant.project.name}-*/"/>
+        </delete>
 	</target>
 	
 	<target name="init">
