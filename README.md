@@ -75,14 +75,14 @@ http://localhost:8200/mail/sendpost
 Post message : 
 ```json
 {
-"from" : "lonslonz@daum.net",
-"to" : "lonslonz@daum.net",
+"from" : "from@smtp.server.com",
+"to" : "recipient@smtp.server.com",
 "subject" : "my test local",
 "msg" : "now\nMy Test\nnow is 2013",
-"smtpServer" : "smtp.daum.net",
+"smtpServer" : "your.smtp.server.com",
 "smtpPort" : "465",
-"id" : "lonslonz",
-"password" : "skaksTmwlda1@",
+"id" : "your id",
+"password" : "your password",
 "ssl" : "true"
 }
 ```
