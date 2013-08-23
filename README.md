@@ -1,6 +1,6 @@
 PrimeMailer
 ==========
-Relay mail server to SMTP server.
+Http server that relay mails to SMTP server.
 
 - Receive mail requests via HTTP.
 - Buffering mail requests and send mails periodically. 
