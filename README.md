@@ -70,8 +70,8 @@ http://rakeflurry1:8200/mail/send?from=lonslonz@daum.net&to=lonslonz@daum.net&su
 ##### /mail/sendpost
 
 Description
-- HTTP Post로 mail보냄
-- Post message를 json으로 정의
+- send mail using HTTP POST mehotd
+- json text as POST message.
 Method
 - HTTP POST
 Parameters
