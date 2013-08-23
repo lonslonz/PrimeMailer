@@ -6,6 +6,7 @@ Http server that relay mails to SMTP server.
 - Buffer mail requests and send mails periodically. 
 - Remove the same mails of buffered window.
 - Ignore square brackets of mail content for variables like current time when removing the same mails. 
+- Mail aliasing for multiple recipients.
 - Need to SMTP server's access right. 
 
 ### Installation
@@ -30,19 +31,23 @@ DB Configuration
 - create database rakeflurry
 - execute ./sql/create.sql on rakeflurry db.
 
+Aliasing Configuration
+- if you want to register mail aliases, insert aliases and rcpt address into tb_rcpt_alias. When there is alias in tb_rcpt_alias matching with "to" address, mailer will send a mail to "rcpt_addr" of the tb_rcpt_alias.
+
 
 Server management
 - startup : ./bin/start.sh
 - stop : ./bin/stop.sh
 
+
 ### API
 
-When server is installed, default addresss is http://localhost/mail/.
+When server is installed, default addresss is http://localhost:8100/mail/.
 
 ##### /mail/send
 
 Description
-- HTTP get request로 메일을 보냄
+- send mail from HTTP get request
 Method
 - HTTP GET
 Parameters
