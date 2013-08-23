@@ -29,3 +29,60 @@ Configuration
 Server management
 - startup : ./bin/start.sh
 - stop : ./bin/stop.sh
+
+### API
+
+When server is installed, default addresss is http://localhost/mail/.
+
+##### /mail/send
+
+Description
+- HTTP get request로 메일을 보냄
+Method
+- HTTP GET
+Parameters
+- from  : mail address
+- to : mail address, can use comma and semi-colon for many recipients.
+- subject : mail subject
+- msg : mail content
+- (optional) : can be defined in server.xml or GET parameters.
+ - ssl : use ssl
+ - smtpServer : smtp server address
+ - smtpPort : smtp server port
+ - id : smtp server's id
+ - password : smtp server's password
+
+eg.)
+``
+http://rakeflurry1:8200/mail/send?from=lonslonz@daum.net&to=lonslonz@daum.net&subject=testget&msg=msg
+``
+
+##### /mail/sendpost
+
+Description
+- HTTP Post로 mail보냄
+- Post message를 json으로 정의
+Method
+- HTTP POST
+Parameters
+- Completely the same as parameters of /mail/send. Only difference is using son. 
+
+eg.)
+``
+http://localhost:8200/mail/sendpost
+``
+
+Post message : 
+```json
+{
+"from" : "lonslonz@daum.net",
+"to" : "lonslonz@daum.net",
+"subject" : "my test local",
+"msg" : "now\nMy Test\nnow is 2013",
+"smtpServer" : "smtp.daum.net",
+"smtpPort" : "465",
+"id" : "lonslonz",
+"password" : "skaksTmwlda1@",
+"ssl" : "true"
+}
+```
