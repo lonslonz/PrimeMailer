@@ -26,6 +26,11 @@ Configuration
 - ./conf/server.xml : copy from server.default.xml, set your port & email SMTP server information.
 - ./conf/hibernate.cfg.xml : copy from hibernate.cfg.default.xml, set your mysql information. 
 
+DB Configuration
+- create database rakeflurry
+- execute ./sql/create.sql on rakeflurry db.
+
+
 Server management
 - startup : ./bin/start.sh
 - stop : ./bin/stop.sh
