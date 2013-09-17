@@ -47,10 +47,6 @@
     <properties>
         <property key = "saveRuntimeIntoDb" value = "false"/>
         <property key = "runtimeDb" value = "caskRuntime"/>
-        <!--
-        <property key = "smtpServer" value = "10.40.30.85"/>
-        <property key = "smtpPort" value = "25"/>
---> 
         <property key = "crPassword" value = "password"/>
         <property key = "crSalt" value = "34343434"/>
         <property key = "smtpServer" value = "smtp.server"/>

@@ -11,6 +11,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.apache.commons.net.util.Base64;
 import org.junit.Test;
 
 public class Crypto {
@@ -70,7 +71,14 @@ public class Crypto {
         byte[] enc = cr.encrypt("skskasTmwl");
         System.out.println("enc : " + enc);
         
+        for(int i = 0; i < enc.length; i++) {
+            System.out.print(enc[i]);
+        }
+        System.out.print("\n");
         String org = cr.decrypt(enc);
+         org = cr.decrypt(enc);
+         org = cr.decrypt(enc);
+         org = cr.decrypt(enc);
         System.out.println("org : " + org);
     }    
 }
