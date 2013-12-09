@@ -3,6 +3,9 @@
                    Release Notes
 
 --------------------
+0.2.4
+- fix encoding, utf8 msg.
+ 
 0.2.3
 - cask lib up
 - fix build

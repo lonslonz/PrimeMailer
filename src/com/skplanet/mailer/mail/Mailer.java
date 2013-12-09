@@ -6,10 +6,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;
+import org.apache.commons.mail.EmailConstants;
 import org.apache.commons.mail.SimpleEmail;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -161,6 +161,7 @@ public class Mailer {
             email.setFrom(curr.getSender());
             email.setSubject(curr.getSubject());
             email.setMsg(curr.getMessage());
+            email.setCharset(EmailConstants.UTF_8);
             
             String[] receivers = curr.getRecipient().split("[,;]");
             for(int j = 0; j < receivers.length; j++) {
