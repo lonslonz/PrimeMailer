@@ -144,6 +144,7 @@ public class Mailer {
     private void sendRealLow(MailDao curr) throws Exception {
         try {
             Email email = new SimpleEmail();
+            email.setCharset(EmailConstants.UTF_8);
             
             if(curr.getId() != null) {
                 email.setAuthenticator(
@@ -161,7 +162,7 @@ public class Mailer {
             email.setFrom(curr.getSender());
             email.setSubject(curr.getSubject());
             email.setMsg(curr.getMessage());
-            email.setCharset(EmailConstants.UTF_8);
+            
             
             String[] receivers = curr.getRecipient().split("[,;]");
             for(int j = 0; j < receivers.length; j++) {
