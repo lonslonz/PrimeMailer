@@ -3,6 +3,9 @@
                    Release Notes
 
 --------------------
+0.3.0
+- RAKE-209 : windows size property can control time interval that removes duplicated mail. 
+
 0.2.4
 - fix encoding, utf8 msg.
  

@@ -48,7 +48,7 @@
     
 	<target name="compile" depends="clean, init">
 		<javac debug="true" srcdir="${src.dir}" destdir="${classes.dir}" 
-				classpathref="libraries" includeantruntime="false" />
+				classpathref="libraries" includeantruntime="false" encoding="UTF-8" />
 		<copy todir="${classes.dir}">
 			<fileset dir="${src.dir}">
 				<include name="**/*.xml"/>
