@@ -31,7 +31,7 @@ public class SendMailBatch implements SimpleService {
             
             while(true) {
                 try {
-                    int count = Mailer.getInstance().sendRealNotSent();
+                    int count = Mailer.getInstance().sendNotSent();
                     
                     logger.info("complete to send mail. count : {}", count);
                     

@@ -25,6 +25,7 @@ public class MailDao {
     private String id;
     private byte[] password;
     private Boolean needSend = true;
+    private Integer windowSize = 1;
     
     @Id @GeneratedValue
     @Column(name = "mail_id")
@@ -133,4 +134,5 @@ public class MailDao {
     public void setNeedSend(Boolean needSend) {
         this.needSend = needSend;
     }
+    
 }

@@ -30,12 +30,13 @@ public class Mailer {
     private static Mailer instance = new Mailer();
     private static int TIME_OUT = 10000; 
     private static int RETRY_COUNT = 3;
+    private Boolean testMode = false;
     
     public static Mailer getInstance() {
         return instance;
     }
 
-    public void send(
+    public void save(
             String from, 
             String to, 
             String subject, 
@@ -86,35 +87,8 @@ public class Mailer {
 
     }
     
-    private void disableSameMessage(int index, List<MailDao> mailList) {
-        
-        for(int i = 0; i < mailList.size(); ++i) {
-            if(i > index) {
-                MailDao curr = mailList.get(i);
-                if(curr.getNeedSend() && isSameMessage(curr, mailList.get(index))) {
-                    curr.setNeedSend(false);
-                    curr.setReturnId("disabled");
-                    logger.info("mail disables. id : {}", curr.getMailId());
-                }
-            }
-        }
-    }
     
-    private boolean isSameMessage(MailDao first, MailDao second) {
-        
-        if(!first.getSubject().equals(second.getSubject())) {
-            return false;
-        } 
-        if(!removeBracket(first.getMessage()).equals(removeBracket(second.getMessage()))) {
-            return false;
-        }
-        
-        return true;
-    }
-    private String removeBracket(String message) {
-        String remove = message.replaceAll("\\[.*\\]", "");
-        return remove;
-    }
+    
     
     private String getDecryptPassword(MailDao dao) throws Exception {
         Crypto crypt = new Crypto();
@@ -141,7 +115,7 @@ public class Mailer {
         }
         return rcptList;
     }
-    private void sendRealLow(MailDao curr) throws Exception {
+    private void sendLow(MailDao curr) throws Exception {
         try {
             Email email = new SimpleEmail();
             email.setCharset(EmailConstants.UTF_8);
@@ -178,8 +152,12 @@ public class Mailer {
             int retryCount = 0;
             while(true) {
                 try {
-                    String sendId = email.send();
-                    curr.setReturnId(sendId);
+                	if(!testMode) {
+	                    String sendId = email.send();
+	                    curr.setReturnId(sendId);
+                	} else {
+                		curr.setReturnId("dont send in test mode");
+                	}
                     break;
                 } catch(Exception e) {
                     logger.error("mail send failed. retry : {}, {}", retryCount, StringUtil.exception2Str(e));
@@ -210,23 +188,18 @@ public class Mailer {
                             curr.getSmtpPort()});
         }
     }
-    public int sendRealNotSent() throws Exception {
+    public int sendNotSent() throws Exception {
         
         List<MailDao> mailList = selectNotSent();
         
-        
-        for(int i = 0; i < mailList.size(); ++i) {
-            MailDao curr = mailList.get(i);
-            if(curr.getNeedSend()) {
-                disableSameMessage(i, mailList);
-            }
-        }
+        DuplicatedWindow.getInstance().removeStaled();
+        disableDuplicatedMessage(mailList);
         
         int count = 0;
         for(int i = 0; i < mailList.size(); ++i) {
             MailDao curr = mailList.get(i);
             if(curr.getNeedSend()) {
-                sendRealLow(curr);
+                sendLow(curr);
                 ++count;
             } else {
                 update(curr);
@@ -234,7 +207,20 @@ public class Mailer {
         }
         return count;
     }
-    
+    private void disableDuplicatedMessage(List<MailDao> mailList) {
+        
+        for(int i = 0; i < mailList.size(); ++i) {
+        	MailDao curr = mailList.get(i);
+        	if(DuplicatedWindow.getInstance().existSameMessage(curr)) {
+        		curr.setNeedSend(false);
+        		curr.setReturnId("duplicated");
+        	    logger.info("mail duplicated. id : {}", curr.getMailId());
+                continue;
+        	}
+        	
+        	DuplicatedWindow.getInstance().register(curr);
+        }
+    }
 
 
     private static void update(MailDao mailDao) throws Exception {
@@ -353,4 +339,14 @@ public class Mailer {
             session.close();
         }
     }
+
+	public Boolean getTestMode() {
+		return testMode;
+	}
+
+	public void setTestMode(Boolean testMode) {
+		this.testMode = testMode;
+	}
+    
+    
 }

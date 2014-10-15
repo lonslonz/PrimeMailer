@@ -22,6 +22,7 @@ import com.skplanet.mailer.util.CommonUtils;
 // from : lonslonz@sk.com
 // to : [lonslonz@sk.com, lonslonz@daum.net],
 // subject : test 
+// windowTime : by sec. default minute
 // msg : my body test
 public class SendMail implements SimpleService {
     private Logger logger = LoggerFactory.getLogger(SendMail.class);
@@ -88,7 +89,7 @@ public class SendMail implements SimpleService {
 //                                    password,
 //                                    ssl);
         
-        Mailer.getInstance().send(request.getString("from"),
+        Mailer.getInstance().save(request.getString("from"),
                 request.getString("to"), 
                 request.getString("subject"),
                 request.getString("msg"),
